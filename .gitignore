@@ -1,0 +1,4 @@
+go.mod.*
+vendor
+go.work
+go.work.sum
