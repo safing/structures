@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestMimeTypes(t *testing.T) {
@@ -13,12 +14,12 @@ func TestMimeTypes(t *testing.T) {
 	// Test static maps.
 	for _, mimeType := range FormatToMimeType {
 		cleaned, _, err := mime.ParseMediaType(mimeType)
-		assert.NoError(t, err, "mime type must be parse-able")
+		require.NoError(t, err, "mime type must be parse-able")
 		assert.Equal(t, mimeType, cleaned, "mime type should be clean in map already")
 	}
 	for mimeType := range MimeTypeToFormat {
 		cleaned, _, err := mime.ParseMediaType(mimeType)
-		assert.NoError(t, err, "mime type must be parse-able")
+		require.NoError(t, err, "mime type must be parse-able")
 		assert.Equal(t, mimeType, cleaned, "mime type should be clean in map already")
 	}
 

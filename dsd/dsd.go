@@ -13,8 +13,7 @@ import (
 	"github.com/ghodss/yaml"
 	"github.com/vmihailenco/msgpack/v5"
 
-	"github.com/safing/portbase/formats/varint"
-	"github.com/safing/portbase/utils"
+	"github.com/safing/structures/varint"
 )
 
 // Load loads an dsd structured data blob into the given interface.
@@ -39,25 +38,25 @@ func LoadAsFormat(data []byte, format uint8, t interface{}) (err error) {
 	case JSON:
 		err = json.Unmarshal(data, t)
 		if err != nil {
-			return fmt.Errorf("dsd: failed to unpack json: %w, data: %s", err, utils.SafeFirst16Bytes(data))
+			return fmt.Errorf("dsd: failed to unpack json: %w, data: %s", err, safeFirst16Bytes(data))
 		}
 		return nil
 	case YAML:
 		err = yaml.Unmarshal(data, t)
 		if err != nil {
-			return fmt.Errorf("dsd: failed to unpack yaml: %w, data: %s", err, utils.SafeFirst16Bytes(data))
+			return fmt.Errorf("dsd: failed to unpack yaml: %w, data: %s", err, safeFirst16Bytes(data))
 		}
 		return nil
 	case CBOR:
 		err = cbor.Unmarshal(data, t)
 		if err != nil {
-			return fmt.Errorf("dsd: failed to unpack cbor: %w, data: %s", err, utils.SafeFirst16Bytes(data))
+			return fmt.Errorf("dsd: failed to unpack cbor: %w, data: %s", err, safeFirst16Bytes(data))
 		}
 		return nil
 	case MsgPack:
 		err = msgpack.Unmarshal(data, t)
 		if err != nil {
-			return fmt.Errorf("dsd: failed to unpack msgpack: %w, data: %s", err, utils.SafeFirst16Bytes(data))
+			return fmt.Errorf("dsd: failed to unpack msgpack: %w, data: %s", err, safeFirst16Bytes(data))
 		}
 		return nil
 	case GenCode:
@@ -67,7 +66,7 @@ func LoadAsFormat(data []byte, format uint8, t interface{}) (err error) {
 		}
 		_, err = genCodeStruct.GenCodeUnmarshal(data)
 		if err != nil {
-			return fmt.Errorf("dsd: failed to unpack gencode: %w, data: %s", err, utils.SafeFirst16Bytes(data))
+			return fmt.Errorf("dsd: failed to unpack gencode: %w, data: %s", err, safeFirst16Bytes(data))
 		}
 		return nil
 	default:

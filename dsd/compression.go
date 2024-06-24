@@ -5,7 +5,7 @@ import (
 	"compress/gzip"
 	"errors"
 
-	"github.com/safing/portbase/formats/varint"
+	"github.com/safing/structures/varint"
 )
 
 // DumpAndCompress stores the interface as a dsd formatted data structure and compresses the resulting data.

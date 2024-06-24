@@ -3,8 +3,6 @@ package container
 import (
 	"bytes"
 	"testing"
-
-	"github.com/safing/portbase/utils"
 )
 
 var (
@@ -25,7 +23,7 @@ var (
 func TestContainerDataHandling(t *testing.T) {
 	t.Parallel()
 
-	c1 := New(utils.DuplicateBytes(testData))
+	c1 := New(duplicateBytes(testData))
 	c1c := c1.carbonCopy()
 
 	c2 := New()
@@ -87,7 +85,7 @@ func compareMany(t *testing.T, reference []byte, other ...[]byte) {
 func TestDataFetching(t *testing.T) {
 	t.Parallel()
 
-	c1 := New(utils.DuplicateBytes(testData))
+	c1 := New(duplicateBytes(testData))
 	data := c1.GetMax(1)
 	if string(data[0]) != "T" {
 		t.Errorf("failed to GetMax(1), got %s, expected %s", string(data), "T")
@@ -107,7 +105,7 @@ func TestDataFetching(t *testing.T) {
 func TestBlocks(t *testing.T) {
 	t.Parallel()
 
-	c1 := New(utils.DuplicateBytes(testData))
+	c1 := New(duplicateBytes(testData))
 	c1.PrependLength()
 
 	n, err := c1.GetNextN8()
@@ -149,7 +147,7 @@ func TestBlocks(t *testing.T) {
 func TestContainerBlockHandling(t *testing.T) {
 	t.Parallel()
 
-	c1 := New(utils.DuplicateBytes(testData))
+	c1 := New(duplicateBytes(testData))
 	c1.PrependLength()
 	c1.AppendAsBlock(testData)
 	c1c := c1.carbonCopy()
@@ -204,5 +202,12 @@ func TestContainerMisc(t *testing.T) {
 func TestDeprecated(t *testing.T) {
 	t.Parallel()
 
-	NewContainer(utils.DuplicateBytes(testData))
+	NewContainer(duplicateBytes(testData))
+}
+
+// duplicateBytes returns a new copy of the given byte slice.
+func duplicateBytes(a []byte) []byte {
+	b := make([]byte, len(a))
+	copy(b, a)
+	return b
 }
