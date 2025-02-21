@@ -65,7 +65,7 @@ func DumpToHTTPRequest(r *http.Request, t interface{}, format uint8) error {
 	}
 
 	// Serialize data.
-	data, err := dumpWithoutIdentifier(t, format, "")
+	data, err := DumpWithoutIdentifier(t, format, "")
 	if err != nil {
 		return fmt.Errorf("dsd: failed to serialize: %w", err)
 	}
@@ -117,7 +117,7 @@ func MimeDump(t any, accept string) (data []byte, mimeType string, format uint8,
 	}
 
 	// Serialize and return.
-	data, err = dumpWithoutIdentifier(t, format, "")
+	data, err = DumpWithoutIdentifier(t, format, "")
 	return data, mimeType, format, err
 }
 
